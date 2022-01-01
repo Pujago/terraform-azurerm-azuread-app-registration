@@ -274,6 +274,7 @@ variable "saml_single_sign_on" {
 variable "password_display_name" {
   type        = string
   description = "A display name for the password."
+  default = null
 }
 
 
