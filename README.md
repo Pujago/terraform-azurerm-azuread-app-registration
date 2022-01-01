@@ -12,7 +12,7 @@ Audience application will create following:
 5. Password Credentials
 6. Identifier Uris ( # To set application uri to api//<app_id>, you need to update via script, this is not possible in terraform)
 
-Audience application will create following:
+Client application will create following:
 
 1. Grant application permissions for client app to access the above created web api
 2. Microsoft Graph User.Read delegated permission
