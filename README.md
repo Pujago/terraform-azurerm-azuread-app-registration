@@ -1,6 +1,27 @@
 # terraform-azurerm-azuread-app-registration
 Azure app registration module that create application registration, scopes, app roles, password credentials.
 
+In this release, I have updated the example of how a module is called to create 2 applications - one is the authorizer (audience application or web api), and another is the authorized (i.e. client application)
+
+Audience application will create following:
+
+1. App roles as `Query-01.Read` and `Query-01.Write`
+2. Oauth2_permission_scope `TestScope_01`
+3. Microsoft Graph `User.Read` permission
+4. Service principal
+5. Password Credentials
+6. Identifier Uris ( # To set application uri to api//<app_id>, you need to update via script, this is not possible in terraform)
+
+Audience application will create following:
+
+1. Grant application permissions for client app to access the above created web api
+2. Microsoft Graph User.Read delegated permission
+3. Service principal
+4. Password Credentials
+5. Redirect Uris or reply uris where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token. The authorization server sends the code or token to the redirect URI, so it's important you register the correct location as part of the app registration process.
+
+Note: Not all applications need password credentials to be generated for e.g. audience application, To achieve that a separate module can be created for `azuread_application_password` resource. For the simplicity. I have added this resource in same module along with the resource `azuread_application`
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
