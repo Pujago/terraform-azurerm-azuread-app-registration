@@ -1,62 +1,122 @@
 # azuread_application attributes that are exported
 
-output "object_id" {
-  description = "The object id of application. Can be used to assign roles to user."
+output "audience_object_id" {
+  description = "The object id of audience application. Can be used to assign roles to user."
   value       = module.azurerm_app_reg.object_id
 
 }
 
-output "application_id" {
-  description = "The application id of AzureAD application created."
+output "audience_application_id" {
+  description = "The audience application id of AzureAD application created."
   value       = module.azurerm_app_reg.client_id
 }
 
-output "logo_url" {
-  description = "CDN URL to the application's logo, as uploaded with the logo_image property."
+output "audience_logo_url" {
+  description = "CDN URL to the audience application's logo, as uploaded with the logo_image property."
   value       = module.azurerm_app_reg.logo_url
 }
 
-output "disabled_by_microsoft" {
-  description = "Whether Microsoft has disabled the registered application. If the application is disabled, this will be a string indicating the status/reason, e.g. DisabledDueToViolationOfServicesAgreement."
+output "audience_disabled_by_microsoft" {
+  description = "Whether Microsoft has disabled the registered audience application. If the application is disabled, this will be a string indicating the status/reason, e.g. DisabledDueToViolationOfServicesAgreement."
   value       = module.azurerm_app_reg.disabled_by_microsoft
 }
 
-output "publisher_domain" {
-  description = "The verified publisher domain for the application."
+output "audience_publisher_domain" {
+  description = "The verified publisher domain for the audience application."
   value       = module.azurerm_app_reg.publisher_domain
 }
 
 
+output "client_object_id" {
+  description = "The object id of client application. Can be used to assign roles to user."
+  value       = module.azurerm_app_reg_client.object_id
+
+}
+
+output "client_application_id" {
+  description = "The client application id of AzureAD application created."
+  value       = module.azurerm_app_reg_client.client_id
+}
+
+output "client_logo_url" {
+  description = "CDN URL to the client application's logo, as uploaded with the logo_image property."
+  value       = module.azurerm_app_reg_client.logo_url
+}
+
+output "client_disabled_by_microsoft" {
+  description = "Whether Microsoft has disabled the registered client application. If the application is disabled, this will be a string indicating the status/reason, e.g. DisabledDueToViolationOfServicesAgreement."
+  value       = module.azurerm_app_reg_client.disabled_by_microsoft
+}
+
+output "client_publisher_domain" {
+  description = "The verified publisher domain for the client application."
+  value       = module.azurerm_app_reg_client.publisher_domain
+}
+
+
+
 # azuread_service_principal attributes that are exported
 
-output "display_name" {
-  description = "The display name of the application associated with this service principal."
+output "audience_display_name" {
+  description = "The display name of the audience application associated with this service principal."
   value       = module.azurerm_app_reg.display_name
 }
 
-output "service_principal" {
-  description = "The object Id of Service principal."
+output "audience_service_principal" {
+  description = "The object Id of Service principal for audience app"
   value       = module.azurerm_app_reg.sp_object_id
 }
 
-output "app_role_ids" {
+output "audience_app_role_ids" {
   description = "A mapping of app role values to app role IDs, as published by the associated application, intended to be useful when referencing app roles in other resources in your configuration."
   value       = module.azurerm_app_reg.app_role_ids
 }
 
-output "oauth2_permission_scope_ids" {
+output "audience_oauth2_permission_scope_ids" {
   description = "A mapping of OAuth2.0 permission scope values to scope IDs."
   value       = module.azurerm_app_reg.oauth2_permission_scope_ids
 }
 
-output "oauth2_permission_scopes" {
+output "audience_oauth2_permission_scopes" {
   description = "A mapping of OAuth2.0 permission scope values to scope IDs."
   value       = module.azurerm_app_reg.oauth2_permission_scopes
 }
 
-output "app_roles" {
+output "audience_app_roles" {
   description = "A mapping of OAuth2.0 permission scope values to scope IDs."
   value       = module.azurerm_app_reg.app_roles
+}
+
+
+output "client_display_name" {
+  description = "The display name of the client application associated with this service principal."
+  value       = module.azurerm_app_reg_client.display_name
+}
+
+output "client_service_principal" {
+  description = "The object Id of Service principal of client application."
+  value       = module.azurerm_app_reg_client.sp_object_id
+}
+
+output "Client_app_role_ids" {
+  description = "A mapping of app role values to app role IDs, as published by the associated application, intended to be useful when referencing app roles in other resources in your configuration."
+  value       = module.azurerm_app_reg_client.app_role_ids
+}
+
+
+output "client_oauth2_permission_scope_ids" {
+  description = "A mapping of OAuth2.0 permission scope values to scope IDs."
+  value       = module.azurerm_app_reg_client.oauth2_permission_scope_ids
+}
+
+output "client_oauth2_permission_scopes" {
+  description = "A mapping of OAuth2.0 permission scope values to scope IDs."
+  value       = module.azurerm_app_reg_client.oauth2_permission_scopes
+}
+
+output "client_app_roles" {
+  description = "A mapping of OAuth2.0 permission scope values to scope IDs."
+  value       = module.azurerm_app_reg_client.app_roles
 }
 
 output "application_tenant_id" {
@@ -91,14 +151,30 @@ output "type" {
 }
 
 
-output "key_id" {
-  description = "A UUID used to uniquely identify this password credential."
-  value       = module.azurerm_app_reg_password.key_id
+
+
+# azuread_application_password attributes that are exported
+
+
+output "Audience_key_id" {
+  description = "A UUID used to uniquely identify this password credential for audience."
+  value       = module.azurerm_app_reg.key_id
+}
+
+output "audience_secret" {
+  description = "The password for this audience application, which is generated by Azure Active Directory."
+  value       = module.azurerm_app_reg.client_secret
+  sensitive   = true
+}
+
+output "Client_key_id" {
+  description = "A UUID used to uniquely identify this password credential for client app."
+  value       = module.azurerm_app_reg_client.key_id
 }
 
 output "client_secret" {
-  description = "The password for this application, which is generated by Azure Active Directory."
-  value       = module.azurerm_app_reg_password.client_secret
+  description = "The password for client application, which is generated by Azure Active Directory."
+  value       = module.azurerm_app_reg_client.client_secret
   sensitive   = true
 }
 
