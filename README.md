@@ -1,3 +1,6 @@
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
 # terraform-azurerm-azuread-app-registration
 Azure app registration module that create application registration, scopes and app roles.
 
@@ -15,12 +18,6 @@ Sample application will create following:
 5. Password Credentials
 6. Identifier Uris ( # To set application uri to api//<app_id>, you need to update via script, this is not possible in terraform)
 
-
-
-
-
-<!-- BEGIN_TF_DOCS -->
-## Requirements
 
 | Name | Version |
 |------|---------|
