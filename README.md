@@ -1,5 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-## Requirements
 
 # terraform-azurerm-azuread-app-registration
 Azure app registration module that create application registration, scopes and app roles.
