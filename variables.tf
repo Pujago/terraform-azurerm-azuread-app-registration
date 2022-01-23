@@ -1,44 +1,18 @@
-# For Resource: azuread_application
-
-# Mandatory arguments
 variable "display_name" {
   type        = string
   description = "The display name for the application."
 }
 
-# Optional arguments
 variable "api" {
   description = "An optional api block, which configures API related settings for this application."
-  type = object({
-    mapped_claims_enabled          = bool,
-    requested_access_token_version = number,
-    known_client_applications      = list(string),
-    oauth2_permission_scope = list(object({
-      admin_consent_description  = string,
-      admin_consent_display_name = string,
-      enabled                    = bool,
-      id                         = string,
-      type                       = string,
-      user_consent_description   = string,
-      user_consent_display_name  = string,
-      value                      = string
-    }))
-  })
-  default = null
+  type        = any
+  default     = null
 }
 
 variable "app_role" {
   description = "A collection of app_role blocks."
-  type = list(
-    object({
-      allowed_member_types = list(string),
-      description          = string,
-      display_name         = string,
-      enabled              = bool,
-      id                   = string,
-      value                = string
-  }))
-  default = []
+  type        = any
+  default     = []
 }
 
 variable "device_only_auth_enabled" {
@@ -46,8 +20,6 @@ variable "device_only_auth_enabled" {
   type        = bool
   default     = false
 }
-
-
 
 variable "fallback_public_client_enabled" {
   description = "Specifies whether the application is a public client. Appropriate for apps using token grant flows that don't use a redirect URI."
@@ -86,28 +58,9 @@ variable "oauth2_post_response_required" {
 }
 
 variable "optional_claims" {
-  description = "An optional claim block"
-  type = object({
-    access_token = object({
-      additional_properties = list(string),
-      essential             = string,
-      name                  = string,
-      source                = string
-    }),
-    id_token = object({
-      additional_properties = list(string),
-      essential             = string,
-      name                  = string,
-      source                = string
-    }),
-    saml2_token = object({
-      additional_properties = list(string),
-      essential             = string,
-      name                  = string,
-      source                = string
-    }),
-  })
-  default = null
+  description = "An optional claim block."
+  type        = any
+  default     = null
 }
 
 variable "owners" {
@@ -130,24 +83,14 @@ variable "privacy_statement_url" {
 
 variable "public_client" {
   description = "To configure non-web app or non-web API application settings, for example mobile or other public clients such as an installed application running on a desktop device. Must be a valid https or ms-appx-web URL."
-  type = object({
-    redirect_uris = list(string)
-  })
-  default = null
+  type        = any
+  default     = null
 }
 
 variable "required_resource_access" {
   description = "A collection of required resource access for this application."
-  type = list(
-    object({
-      resource_app_id = string,
-      resource_access = list(
-        object({
-          id   = string,
-          type = string
-      }))
-  }))
-  default = []
+  type        = any
+  default     = null
 }
 
 variable "sign_in_audience" {
@@ -157,11 +100,9 @@ variable "sign_in_audience" {
 }
 
 variable "single_page_application" {
-  description = "A single_page_application block, which configures single-page application (SPA) related settings for this application."
-  type = object({
-    redirect_uris = list(string)
-  })
-  default = null
+  description = "A single_page_application block, which configures single-page application (SPA) related settings for this application. Must be https."
+  type        = any
+  default     = null
 }
 
 variable "support_url" {
@@ -170,7 +111,6 @@ variable "support_url" {
   default     = null
 }
 
-# Both tags and feature tags cannot be used, for custom tags use tag argument. This module uses tags
 variable "tags" {
   description = "A set of tags to apply to the application. Cannot be used together with the feature_tags block"
   type        = list(string)
@@ -190,96 +130,8 @@ variable "terms_of_service_url" {
 }
 
 variable "web" {
-  description = "Configures web related settings for this application"
-  type = object({
-    homepage_url  = string,
-    logout_url    = string,
-    redirect_uris = list(string),
-
-    implicit_grant = object({
-      access_token_issuance_enabled = bool,
-      id_token_issuance_enabled     = bool,
-    })
-  })
-  default = null
-}
-
-# For Resource: azuread_service_principal
-
-#Mandatory arguments
-# application_id assigned directly from the azuread_application resource created
-
-# Optional arguments
-
-variable "account_enabled" {
-  description = "Whether or not the service principal account is enabled."
-  type        = bool
-  default     = true
-}
-
-variable "alternative_names" {
-  description = "A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities."
-  type        = list(string)
-  default     = []
-}
-variable "app_role_assignment_required" {
-  description = "Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false."
-  type        = bool
-  default     = false
-}
-
-
-variable "description" {
-  description = "A description of the service principal provided for internal end-users."
-  type        = string
+  description = "Configures web related settings for this application."
+  type        = any
   default     = null
 }
-
-variable "login_url" {
-  description = "The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on."
-  type        = string
-  default     = null
-}
-
-variable "notes" {
-  description = "A free text field to capture information about the service principal, typically used for operational purposes."
-  type        = string
-  default     = null
-}
-
-variable "notification_email_addresses" {
-  description = "A free text field to capture information about the service principal, typically used for operational purposes."
-  type        = list(string)
-  default     = []
-}
-
-
-variable "preferred_single_sign_on_mode" {
-  description = "The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are `oidc`, `password`, `saml` or `notSupported`. Omit this property or specify a blank string to unset."
-  type        = string
-  default     = null
-}
-
-variable "saml_single_sign_on" {
-  description = "A saml single sign-on block"
-  type = object({
-    relay_state = string
-  })
-  default = null
-}
-
-
-# For Resource: azuread_application_password
-
-variable "password_display_name" {
-  type        = string
-  description = "A display name for the password."
-  default = null
-}
-
-
-
-
-
-
 
